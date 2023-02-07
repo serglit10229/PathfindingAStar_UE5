@@ -29,7 +29,7 @@ void UPathfinder::InitObstacles()
 		FRotator randRotator = FRotator(0.0f, FMath::RandRange(0.0f, 359.0f), 0.0f);
 		FVector randScale = FVector(FMath::RandRange(0.2f, 3.0f), FMath::RandRange(0.1f, 0.2f), 0.2f);
 		FTransform randTransform = FTransform(randRotator, randLocation, randScale);
-		ISM_Obstacles->AddInstanceWorldSpace(randTransform);
+		ISM_Obstacles->AddInstance(randTransform, true);
 	}
 }
 
@@ -75,9 +75,7 @@ bool UPathfinder::FindPath(FVector start, FVector finish)
 
 	Node* startNode = NodeFromLocation(start);
 	Node* finishNode = NodeFromLocation(finish);
-
-
-
+	
 	TArray<Node*> open;
 	TArray<Node*> closed;
 
@@ -107,8 +105,7 @@ bool UPathfinder::FindPath(FVector start, FVector finish)
 			break;
 		}
 
-
-
+		
 		for (Node* neighbour : GetNeighbours(currentNode))
 		{
 			if (!neighbour->walkable || closed.Contains(neighbour))

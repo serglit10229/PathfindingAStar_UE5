@@ -7,6 +7,8 @@
 #include <vector>
 #include "Kismet/KismetSystemLibrary.h"
 #include "Algo/Reverse.h"
+#include <queue>
+#include <functional>
 #include "DrawDebugHelpers.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
 
@@ -51,6 +53,16 @@ public:
 		float fCost()
 		{
 			return gCost + hCost;
+		}
+
+		bool operator<(Node& other) 
+		{
+			if (fCost() == other.fCost())
+			{
+				return hCost < other.hCost;
+			}
+
+			return fCost() > other.fCost();
 		}
 	};
 
